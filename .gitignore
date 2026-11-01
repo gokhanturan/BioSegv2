@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Editör
+.idea/
+.vscode/
+
+# Paketleme çıktıları
+build/
+dist/
+*.spec
+
+# Modeller ve eğitim çıktıları
+birdnet_models/
+modeller/
+src/trained_classifier/
+trained_classifier/
+perch_model/
+son_*.json
+cv_veri_izi.json
+*.npz
+*.joblib
+
+# Veri (kendi etiketli verileriniz)
+src/segments/
+segments/
+out/
+tez_sekilleri/
+bird_sound_dataset*.csv
+*.backup
+
+# Kök klasördeki çalışma çıktıları
+/*.csv
+/*.txt
+!/requirements.txt
+/*.wav
+*.log
+*.zip
+*.ipynb
+_kaldirilan_yedek_*/
+ortam_bilgisi.py
+dosya_listele.py
+
+# İşletim sistemi
+Thumbs.db
+.DS_Store

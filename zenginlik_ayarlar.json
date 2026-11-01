@@ -1,0 +1,13 @@
+{
+  "use_catalog_design": true,
+  "check_time_fields": false,
+  "expected_locations": [],
+  "expected_habitat_types": [],
+  "expected_points_total": null,
+  "min_points_per_group": 10,
+  "planned_points_csv": null,
+  "habitat_groups": {},
+  "min_verified_fraction": 0.0,
+  "expected_months": [],
+  "expected_hours": []
+}

@@ -1,0 +1,89 @@
+# Core scientific computing
+numpy>=1.21.0
+scipy>=1.7.0
+pandas>=1.3.0
+
+# GUI
+PyQt5>=5.15.0
+
+# Audio processing
+librosa>=0.9.0
+soundfile>=0.10.0
+audioread>=3.0.0
+# resampy is a librosa dependency used specifically for resampling.
+# Not always pulled in automatically by pip's dependency resolution,
+# and easy to silently miss when PyInstaller collects librosa's
+# imports — without it, BirdNET/librosa audio loading fails with a
+# misleadingly generic "Generic audio read error occurred from librosa".
+resampy>=0.4.0
+
+# Noise reduction & normalization
+noisereduce>=2.0.0
+pyloudnorm>=0.1.0
+
+# Visualization
+matplotlib>=3.4.0
+
+# Utilities
+psutil>=5.9.0
+
+# ============================================================
+# Species detection (v2.0) — BirdNET
+# UMAP + HDBSCAN REMOVED in v2.0 (were used only for
+# acoustic-similarity clustering, not species classification).
+# ============================================================
+
+# TensorFlow (MLP classifier training; also used by the Perch 2.0 research scripts)
+# Perch 2.0 model card requires TensorFlow >= 2.20.0rc0.
+tensorflow>=2.20.0rc0
+tensorflow-hub>=0.16.1
+kagglehub>=0.3.0
+
+# KNOWN INCOMPATIBILITY: setuptools >= 82.0.0 removed the pkg_resources
+# module that tensorflow_hub still depends on (causes ModuleNotFoundError).
+setuptools<82
+
+# BirdNET-Analyzer (Cornell K. Lisa Yang Center for Conservation
+# Bioacoustics). Models are CC BY-NC-SA 4.0 licensed; research/education
+# use is permitted as non-commercial use per BirdNET-Team's own
+# documentation. Cite: Kahl et al. (2021), Ecological Informatics, 61,
+# 101236. Requires ffmpeg to be installed on the system separately
+# (not pip-installable): https://ffmpeg.org/download.html
+birdnetlib>=0.17
+
+# BirdNET 2.4 embeddings (Train Classifier, cross-validation, richness scan).
+# Model is downloaded on first use.
+birdnet
+
+# ============================================================
+# Custom classifier training ("🧠 Train Classifier", src/ml/)
+# ============================================================
+# scikit-learn was removed earlier (only used for UMAP/HDBSCAN clustering
+# in v1.0) but is RE-ADDED here — now used for group-aware train/val/test
+# splitting (GroupShuffleSplit) and evaluation metrics (classification
+# report, confusion matrix) when training your own BirdNET-embedding-based
+# classifier. This is a lightweight, pure-Python-wheel dependency (no
+# GDAL-style fragility, unlike contextily).
+scikit-learn>=1.0.0
+
+# ============================================================
+# İSTEĞE BAĞLI — Location Map özelliği için gerçek harita karoları
+# ============================================================
+# "Dataset" menüsündeki "Location Map" özelliği, Lat/Lon koordinatlarını
+# HER ZAMAN sade bir koordinat grafiği olarak gösterebilir (ek bağımlılık
+# GEREKMEZ). Aşağıdaki iki seçenekten biriyle gerçek/etkileşimli harita
+# eklenebilir; hiçbiri kurulu değilse özellik sorunsuz, sade modda çalışır.
+
+# TERCİH EDİLEN SEÇENEK — GERÇEK, tüm dünyayı kapsayan, fare ile serbestçe
+# gezinilebilen (karoları dinamik yükleyen) etkileşimli harita
+# (Leaflet.js tabanlı, folium ile üretilir, QWebEngineView içinde
+# gösterilir). Hafif, GDAL gibi kırılgan bir bağımlılık getirmez.
+folium>=0.15
+PyQtWebEngine>=5.15
+
+# ALTERNATİF SEÇENEK — statik (dünya genelinde gezinilemeyen ama fare
+# tekerleğiyle o bölge içinde yakınlaştırılabilen) harita karoları.
+# `contextily`, `rasterio` üzerinden GDAL'a bağımlıdır — bu, TensorFlow'da
+# yaşadığımız türden Windows DLL sorunlarına yol açabilecek, nispeten ağır
+# bir bağımlılık zinciridir. Kurmadan önce bunu bilerek karar verin.
+# contextily>=1.4

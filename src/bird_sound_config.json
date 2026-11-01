@@ -1,0 +1,56 @@
+{
+  "call_types": [
+    "Kur",
+    "Çağrı",
+    "Ötüş",
+    "Alarm",
+    "İletişim",
+    "Diğer"
+  ],
+  "background_noise": [
+    "Motor Sesi",
+    "İnsan Sesi",
+    "Rüzgar Sesi",
+    "Telefon Sesi",
+    "Yağmur Sesi",
+    "Karışık Ses",
+    "Diğer"
+  ],
+  "recordists": [
+    "Gülşah YILMAZ",
+    "Halil SÜEL",
+    "Oğuzhan ERFİDAN",
+    "Esat KIZILKAYA",
+    "Diğer"
+  ],
+  "ornithologists": [
+    "Esat KIZILKAYA",
+    "Halil SÜEL",
+    "Diğer",
+    "Doğrulanmadı"
+  ],
+  "verification_statuses": [
+    "Uzman (Ornitolog) Doğrulamalı",
+    "Etiketçi",
+    "Doğrulanmadı"
+  ],
+  "microphones": [
+    "Zoom H4n Pro Dahili - Sennheiser MKE 600",
+    "Zoom H4n Pro Dahili",
+    "Sennheiser MKE 600",
+    "Audio-Technica AT897",
+    "Rode NTG2",
+    "Zoom H1n Dahili",
+    "Tascam DR-40X Dahili",
+    "Diğer"
+  ],
+  "recorders": [
+    "Zoom H4n Pro",
+    "Zoom H1n",
+    "Tascam DR-40X",
+    "Sony PCM-D100",
+    "Roland R-07",
+    "Diğer"
+  ],
+  "project": "TÜBİTAK 1001 - Proje No: 123O927 - Kuş Türü Fonksiyonel Çeşitliliğinin Hesaplanması, Modellenmesi ve Haritalanması"
+}
