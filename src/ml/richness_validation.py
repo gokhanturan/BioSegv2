@@ -13,7 +13,7 @@ Dürüstlük ilkesi: her segmentin sınıflandırması, o segmentin KAYDINI eği
 modelden gelir (kayıt bazlı, grup-farkında çapraz doğrulama; run_cross_validation ile
 aynı bölmeler). Böylece "model kendi eğitim verisini sınıflandırıyor" yanılgısı olmaz.
 
-Neden önemli: yanlış sınıflandırılan segmentler, noktada gerçekte olmayan "sahte tür"
+Neden önemli: yanlış sınıflandırılan segmentler, noktada gerçekte olmayan "yanlış pozitif tür"
 üretir; bunlar belirlenen tür sayısını şişirebilir.
 Güven eşiği (min_confidence) bu etkiyi azaltır; sonuçlar eşiğe göre raporlanır.
 """
@@ -255,7 +255,7 @@ def load_point_info(csv_path: str) -> Dict[str, dict]:
 
 def per_point_detail(kept_samples, point_of_recording, class_names, prediction, threshold=0.0,
                      point_info: Optional[Dict[str, dict]] = None) -> List[dict]:
-    """Nokta başına: uzman / model tür sayısı, sahte (modelin eklediği) ve kaçırılan türlerin adları, habitat bilgisi."""
+    """Nokta başına: uzman / model tür sayısı, yanlış pozitif (modelin eklediği) ve kaçırılan türlerin adları, habitat bilgisi."""
     cls_idx = {c: i for i, c in enumerate(class_names)}
     y_true = np.array([cls_idx[s.species] for s in kept_samples])
     pts = np.array([point_of_recording.get(s.recording_id) for s in kept_samples], dtype=object)
@@ -322,7 +322,7 @@ def format_text(z: dict) -> str:
         lines.append(
             f"  güven ≥ {o['guven_esigi']:.1f}: tespit oranı {o['tespit_orani_ort']:.2f} | tür uzman {o['tur_uzman_ort']:.0f} / "
             f"model {o['tur_model_ort']:.1f} | Jaccard {o['var_yok_jaccard_ort']:.2f} (kesinlik {o['var_yok_kesinlik_ort']:.2f}, "
-            f"duyarlılık {o['var_yok_duyarlilik_ort']:.2f}) | sahte tür (nokta,tür çifti) {o['sahte_tur_nokta_cifti_ort']:.1f}, "
+            f"duyarlılık {o['var_yok_duyarlilik_ort']:.2f}) | yanlış pozitif tür (nokta,tür çifti) {o['sahte_tur_nokta_cifti_ort']:.1f}, "
             f"kaçırılan {o['kacirilan_tur_nokta_cifti_ort']:.1f}")
     if z.get("n_noktasiz_kayit"):
         lines.append(f"  ⚠ {z['n_noktasiz_kayit']} kaydın Habitat_ID değeri yok; karşılaştırmaya girmedi.")
@@ -355,7 +355,7 @@ def group_points(nokta_rows: list) -> dict:
 
 
 def hover_html(rows: list, name_fn=lambda t: t, max_points: int = 6) -> str:
-    """Haritadaki açılır bilgi kutusuyla aynı düzende: 'ID (habitat tipi) — konum', sayılar, sahte/kaçırılan türler."""
+    """Haritadaki açılır bilgi kutusuyla aynı düzende: 'ID (habitat tipi) — konum', sayılar, yanlış pozitif/kaçırılan türler."""
     def names(text):
         return "; ".join(name_fn(t) for t in str(text).split("; ") if t)
 
@@ -376,7 +376,7 @@ def hover_html(rows: list, name_fn=lambda t: t, max_points: int = 6) -> str:
             lines.append(" · ".join(meta))
         lines.append(f"Tür sayısı: uzman {r['tur_uzman']} / model {r['tur_model']}")
         if r.get("sahte_turler"):
-            lines.append(f"<span style='color:#b45309'>Sahte türler: {names(r['sahte_turler'])}</span>")
+            lines.append(f"<span style='color:#b45309'>Yanlış pozitif türler: {names(r['sahte_turler'])}</span>")
         if r.get("kacirilan_turler"):
             lines.append(f"<span style='color:#b91c1c'>Kaçırılan türler: {names(r['kacirilan_turler'])}</span>")
         if not r.get("sahte_turler") and not r.get("kacirilan_turler") and r["tur_uzman"] == r["tur_model"]:

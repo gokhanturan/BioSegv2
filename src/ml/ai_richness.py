@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Dict, List, Sequence, Tuple
 
 COLUMNS = ("Model", "Güven eşiği", "Tespit oranı", "Tür (uzman)", "Tür (model)", "Nokta başı |fark|",
-           "Spearman", "Kesinlik", "Duyarlılık", "Jaccard", "Sahte tür", "Kaçırılan")
+           "Spearman", "Kesinlik", "Duyarlılık", "Jaccard", "Yanlış pozitif", "Kaçırılan")
 COLUMN_HELP = (
     "Model.",
     "Pencere/segment, modelin en yüksek olasılığı bu değerin altındaysa 'tür yok' sayılır (0 = hepsi sayılır).",

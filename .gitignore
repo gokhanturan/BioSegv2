@@ -30,6 +30,7 @@ src/segments/
 segments/
 out/
 tez_sekilleri/
+src/yedek_json/
 bird_sound_dataset*.csv
 *.backup
 
@@ -48,3 +49,9 @@ dosya_listele.py
 # İşletim sistemi
 Thumbs.db
 .DS_Store
+konum_haritasi_*.pdf
+
+# Paylasilan veri seti ve calisma ciktilari
+konum_haritasi_*.pdf
+!dataset/segments/
+!dataset/bird_sound_dataset.csv

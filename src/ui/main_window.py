@@ -741,7 +741,7 @@ class SpeciesRichnessDialog(_BaseSummaryDialog):
             for cap in self._caption(
                     "Her model için, uzman etiketleriyle aynı noktalarda belirlenen tür sayıları ve (nokta, tür) çiftlerinde uyum.",
                     "Jaccard 1'e, nokta başı |fark| 0'a yaklaştıkça model uzmanın tür listesini daha iyi yeniden üretir. "
-                    "Güven eşiği yükseldikçe sahte tür azalır, kaçırılan tür artar; ön tanımlı değer seçilmez, hepsi raporlanır.",
+                    "Güven eşiği yükseldikçe yanlış pozitif tür azalır, kaçırılan tür artar; ön tanımlı değer seçilmez, hepsi raporlanır.",
                     "Modeller arası farklar küçükse ve ± değerleri örtüşüyorsa üstünlük iddia edilmez."):
                 tv.addWidget(cap)
             widgets.append(tcard)
@@ -752,7 +752,7 @@ class SpeciesRichnessDialog(_BaseSummaryDialog):
                         _rv.make_scatter_figure(m["nokta"], m["ad"], compact=True),
                         f"Nokta başına tür sayısı — {m['ad']}",
                         "Her nokta için uzman ve modelin belirlediği tür sayısı.",
-                        "Köşegen = aynı sayıda tür (aynı türler olması gerekmez). Üstü sahte tür, altı kaçırılan tür.",
+                        "Köşegen = aynı sayıda tür (aynı türler olması gerekmez). Üstü yanlış pozitif tür, altı kaçırılan tür.",
                         "Güven eşiği yok, ilk tekrar.", max_px=700))
             for f_ in figs:        # alt alta: sayfa yatayda taşmaz, metin kartları kırpılmaz
                 widgets.append(self._row([f_]))
@@ -1351,8 +1351,8 @@ class LocationMapDialog(_BaseSummaryDialog):
 
             if n_points > 0:
                 summary_text = (
-                    f"{n_points} farklı kayıt noktası (Habitat_ID/Location'a göre gruplu), "
-                    f"toplam {total_records} kayıt. Gerçek, dünya çapında etkileşimli bir harita "
+                    f"{n_points} farklı örnekleme noktası (Habitat_ID/Location'a göre gruplu), "
+                    f"toplam {total_records} segment. Gerçek, dünya çapında etkileşimli bir harita "
                     "— fare tekerleğiyle yakınlaştırıp uzaklaştırabilir, sürükleyerek dünyanın her yerine gidebilirsiniz. "
                     "Sağ üstten Harita, Arazi veya Uydu görünümünü seçebilirsiniz. "
                     "Ayrıntı için bir noktaya tıklayın. Daire boyutu etiketli segment sayısını (çaba), "
@@ -1385,9 +1385,9 @@ class LocationMapDialog(_BaseSummaryDialog):
             )
             summary_text = (
                 (
-                    f"{n_points} farklı kayıt noktası (Habitat_ID/Location'a göre gruplu), "
-                    f"toplam {total_records} kayıt.\n"
-                    "Nokta boyutu: o noktadaki kayıt sayısı. Renk: o noktadaki tür zenginliği "
+                    f"{n_points} farklı örnekleme noktası (Habitat_ID/Location'a göre gruplu), "
+                    f"toplam {total_records} segment.\n"
+                    "Nokta boyutu: o noktadaki segment sayısı. Renk: o noktadaki tür zenginliği "
                     "(farklı tür sayısı). Fare tekerleği: yakınlaştır/uzaklaştır."
                     if n_points > 0 else
                     "Henüz Enlem/Boylam (Lat/Lon) değeri girilmiş kayıt yok."
@@ -2223,7 +2223,7 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
             self._result_layout.addWidget(self._note_label(
                 f"<b>Nasıl okunur:</b> Kayıtlar ayrı tutularak model {cv['n_deger']} kez test edildi; kartlardaki "
                 f"değer bu testlerin ortalamasıdır. Tek tek testlerde doğruluk %{lo * 100:.0f}–%{hi * 100:.0f} "
-                f"arasında değişti; yeni kayıtlarda beklenen başarı da bu aralıkta dalgalanır."))
+                f"arasında değişti. Bu aralık, bu veri setindeki kayıt bölmelerinin değişkenliğini gösterir; yeni kayıt veya alanlar için genelleme iddiası değildir."))
         else:
             reason = f" ({cv['hata']})" if cv and "hata" in cv else ""
             self._result_layout.addWidget(self._note_label(
@@ -2243,7 +2243,7 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
         zu = tr.zenginlik_uyumu
         if zu and "esikler" in zu:
             head = ("<tr><th align='left'>Güven eşiği</th><th>Tespit oranı</th><th>Tür (uzman / model)</th>"
-                    "<th>Jaccard</th><th>Kesinlik</th><th>Duyarlılık</th><th>Sahte tür</th><th>Kaçırılan</th></tr>")
+                    "<th>Jaccard</th><th>Kesinlik</th><th>Duyarlılık</th><th>Yanlış pozitif</th><th>Kaçırılan</th></tr>")
             body = "".join(
                 f"<tr><td>≥ {o['guven_esigi']:.1f}</td><td align='center'>{o['tespit_orani_ort']:.2f}</td>"
                 f"<td align='center'>{o['tur_uzman_ort']:.0f} / {o['tur_model_ort']:.1f}</td>"
@@ -2253,7 +2253,7 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
                 f"<td align='center'>{o['kacirilan_tur_nokta_cifti_ort']:.1f}</td></tr>" for o in zu["esikler"])
             self._result_layout.addWidget(self._note_label(
                 f"<b>Tür zenginliği uyumu</b> ({zu['n_nokta']} nokta): modelin çapraz doğrulama tahminlerinden çıkan tür listesi, "
-                "uzmanın listesiyle karşılaştırıldı. Sahte tür = modelin noktada olmayan bir türü bulması; kaçırılan = uzmanın "
+                "uzmanın listesiyle karşılaştırıldı. Yanlış pozitif tür = modelin noktada olmayan bir türü bulması; kaçırılan = uzmanın "
                 "bulduğu türün model listesinde olmaması (nokta×tür çifti sayısı).<br>"
                 f"<table cellpadding='4' style='margin-top:6px'>{head}{body}</table>"
                 "<span style='color:#6b7280'>Yalnızca sınıflandırma hatasının etkisi ölçülür; uzmanın seçtiği segmentler girdi "
@@ -2482,7 +2482,10 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
             pass
         self._apply_settings(stored.settings)
         self.last_result = stored.result
-        self._show_result(stored.result, stored.details, stored.saved_at, restored=True, stale_note=stale)
+        details = stored.details
+        if isinstance(details, str):  # eski kayıtlardaki terimi gösterimde güncelle
+            details = details.replace("sahte tür", "yanlış pozitif tür")
+        self._show_result(stored.result, details, stored.saved_at, restored=True, stale_note=stale)
         self.status_label.setText(f"Kayıtlı sonuç gösteriliyor (son eğitim: {last_result_store.format_time(stored.saved_at)}).")
 
     def _on_finished(self, result):
@@ -2574,9 +2577,9 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
             self._attach_scatter_hover(scatter_canvas, zu["nokta"])
             self._add_chart_with_caption(
                 scatter_canvas,
-                "Aynı (uzman, model) değerine düşen noktalar tek işarette toplanır; içindeki sayı nokta adedidir. İşaretin üzerine gelince noktanın ayrıntıları (habitat, konum, sahte ve kaçırılan türler) görünür. Köşegen = iki listede de "
+                "Aynı (uzman, model) değerine düşen noktalar tek işarette toplanır; içindeki sayı nokta adedidir. İşaretin üzerine gelince noktanın ayrıntıları (habitat, konum, yanlış pozitif ve kaçırılan türler) görünür. Köşegen = iki listede de "
                 "aynı sayıda tür (aynı türler olması gerekmez; tür bazlı uyum için Jaccard, kesinlik ve duyarlılığa bakın). "
-                "Köşegenin üstü modelin sahte tür eklediğini, altı tür kaçırdığını gösterir (güven eşiği yok, ilk tekrar).")
+                "Köşegenin üstü modelin yanlış pozitif tür eklediğini, altı tür kaçırdığını gösterir (güven eşiği yok, ilk tekrar).")
             self._add_point_table(zu["nokta"])
 
         cv_cm = (result.training_result.cv_summary or {}).get("karisiklik")
@@ -2634,7 +2637,7 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
         """Nokta bazlı ayrıntı: hangi nokta, habitat tipi, konum ve modelin eklediği / kaçırdığı türler."""
         cols = [("nokta", "Nokta (Habitat_ID)"), ("habitat_tipi", "Habitat tipi"), ("konum", "Konum"),
                 ("n_kayit", "Kayıt"), ("n_segment", "Segment"), ("tur_uzman", "Uzman tür"), ("tur_model", "Model tür"),
-                ("sahte_turler", "Sahte türler (modelin eklediği)"), ("kacirilan_turler", "Kaçırılan türler (uzmanın bulduğu)")]
+                ("sahte_turler", "Yanlış pozitif türler (modelin eklediği)"), ("kacirilan_turler", "Kaçırılan türler (uzmanın bulduğu)")]
         numeric = {"n_kayit", "n_segment", "tur_uzman", "tur_model"}
 
         def names(text):
@@ -2666,7 +2669,7 @@ class ClassifierTrainingDialog(_BaseSummaryDialog):
         tbl.setSortingEnabled(True)
         tbl.setMinimumHeight(min(60 + 34 * len(rows), 460))
         tbl.setMinimumWidth(980)
-        cap = QLabel("Nokta ayrıntıları (ilk tekrar, güven eşiği yok). Sütun başlığına tıklayınca sıralanır. Sahte tür: modelin noktada "
+        cap = QLabel("Nokta ayrıntıları (ilk tekrar, güven eşiği yok). Sütun başlığına tıklayınca sıralanır. Yanlış pozitif tür: modelin noktada "
                      "bulduğu ama uzmanın bulmadığı tür; kaçırılan: uzmanın bulduğu ama modelin bulmadığı tür. Tablo "
                      "zenginlik_nokta.csv olarak da kaydedilir.")
         cap.setWordWrap(True)
