@@ -4,6 +4,9 @@
 
 [![Lisans: AGPL v3](https://img.shields.io/badge/Lisans-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+<!-- Zenodo DOI rozeti: ilk release sonrası Zenodo'daki rozet kodunu buraya yapıştırın ve bu satırı açın:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+-->
 
 [English README](README.en.md)
 
@@ -152,7 +155,7 @@ Arayüz Türkçedir. Ana sekmeler: **Ön Hazırlık, Ses Dosyası, Görünüm, O
 ### 4. Kuş ötüşlerini tespit edin
 **"Ötüş Tespiti"** sekmesinde:
 - Gürültü azaltma ve LUFS normalleştirme kutuları varsayılan olarak açıktır; kayıt, taramadan hemen önce otomatik olarak temizlenir ve normalleştirilir.
-- BirdNET'in en düşük güven eşiğini ayarlayın (varsayılan 0,10); isterseniz eBird tabanlı menzil süzgeci için enlem ve boylam girin.
+- BirdNET'in en düşük güven eşiğini ayarlayın (varsayılan 0,10; tezde 0,50 kullanılmış, coğrafi süzgeç uygulanmamıştır); isterseniz eBird tabanlı menzil süzgeci için enlem ve boylam girin.
 - **"Kuş Ötüşlerini Tespit Et"** düğmesine basın.
 
 BirdNET kaydın tamamını kendi iç parçalamasıyla tarar. Sonuçlar tabloda (bilimsel ad, Türkçe ad, güven) görünür; tespit edilen bölgeler dalga biçiminde vurgulanır.
@@ -237,7 +240,7 @@ Her etiketli segment için:
 | 11 | Segment        | Start_Time                  | Segment başlangıcı (sn)                          |
 | 12 | Segment        | End_Time                    | Segment bitişi (sn)                              |
 | 13 | Segment        | Duration                    | Segment süresi (sn)                              |
-| 14 | Ses bilgisi    | Call_Type                   | Ötüş türü                                        |
+| 14 | Ses bilgisi    | Call_Type                   | Vokalizasyon türü (Kur / Çağrı)                  |
 | 15 | Ses bilgisi    | type_Count                  | Ötüş sayısı                                      |
 | 16 | Taksonomi      | Order                       | Takım                                            |
 | 17 | Taksonomi      | Family                      | Familya                                          |
@@ -310,7 +313,7 @@ Eğitim: Adam eniyileyici (Keras varsayılan öğrenme hızı), seyrek kategorik
 - **Tekrarlanabilirlik:** Kat bölmeleri için tohum 42 + tekrar numarasıdır. Model başlatma ve eğitim rastgeleliği her kat için ayrıca sabitlenir (`keras.utils.set_random_seed`). Her sonuç, bölme parmak iziyle birlikte kaydedilir.
 
 ### Yapay zekâ ile tür zenginliği
-Tür Zenginliği Belirleme penceresindeki **Yapay Zekâ** sekmesi, sınıflandırma hatalarının nokta düzeyindeki tür zenginliğine yansımasını ölçer. Girdi, uzmanın ayırdığı segmentlerdir; her segmentin tahmini, o segmentin kaynak kaydını eğitimde görmemiş çapraz doğrulama modelinden gelir. Tahmin edilen sınıfın olasılığı belirli bir eşiğin altındaysa segment "tür yok" sayılır (eşikler 0, 0,5, 0,7, 0,9). Ölçütler: tespit oranı, uzman ve model tür sayıları, nokta başına tür sayısı farkının ortalama mutlak değeri, Spearman korelasyonu, (nokta, tür) çiftleri üzerinden kesinlik, duyarlılık ve Jaccard benzerliği, sahte ve kaçırılan tür çiftleri. Kapsam **yalnızca sınıflandırma hatalarıdır**; ham kayıt taramasındaki tespit ve segmentasyon hataları dışındadır. Evren modelin tanıdığı türlerle sınırlıdır.
+Tür Zenginliği Belirleme penceresindeki **Yapay Zekâ** sekmesi, sınıflandırma hatalarının nokta düzeyindeki tür zenginliğine yansımasını ölçer. Girdi, uzmanın ayırdığı segmentlerdir; her segmentin tahmini, o segmentin kaynak kaydını eğitimde görmemiş çapraz doğrulama modelinden gelir. Tahmin edilen sınıfın olasılığı belirli bir eşiğin altındaysa segment "tür yok" sayılır (eşikler 0, 0,5, 0,7, 0,9). Ölçütler: tespit oranı, uzman ve model tür sayıları, nokta başına tür sayısı farkının ortalama mutlak değeri, Spearman korelasyonu, (nokta, tür) çiftleri üzerinden kesinlik, duyarlılık ve Jaccard benzerliği, yanlış pozitif ve kaçırılan tür çiftleri. Kapsam **yalnızca sınıflandırma hatalarıdır**; ham kayıt taramasındaki tespit ve segmentasyon hataları dışındadır. Evren modelin tanıdığı türlerle sınırlıdır.
 
 ## 🔬 Bilimsel ve Yöntemsel Notlar
 
@@ -326,7 +329,7 @@ Tür Zenginliği Belirleme penceresindeki **Yapay Zekâ** sekmesi, sınıflandı
 
 ## 📚 Kullanılan Modeller
 
-- **BirdNET** — Kahl, S., Wood, C.M., Eibl, M., Klinck, H. (2021). *BirdNET: A deep learning solution for avian diversity monitoring*. Ecological Informatics, 61, 101236. https://doi.org/10.1016/j.ecoinf.2021.101236. BirdNET-Analyzer modelleri BirdNET ekibi tarafından CC BY-NC-SA 4.0 ile lisanslanmıştır; belgelerine göre ticari olmayan araştırma ve eğitim kullanımına izin verilir.
+- **BirdNET** — Kahl, S., Wood, C.M., Eibl, M., Klinck, H. (2021). *BirdNET: A deep learning solution for avian diversity monitoring*. Ecological Informatics, 61, 101236. https://doi.org/10.1016/j.ecoinf.2021.101236. BirdNET-Analyzer modelleri BirdNET ekibi tarafından CC BY-NC-SA 4.0 ile lisanslanmıştır; belgelerine göre ticari olmayan araştırma ve eğitim kullanımına izin verilir. BioSeg'in AGPL-3.0 lisansı yalnızca bu deponun kodu için geçerlidir; BirdNET ve Perch modelleri kendi lisanslarına tabidir.
 - **Perch 2.0** (dondurulmuş gömülü temsil çıkarıcı olarak, tek başına ve BirdNET ile birleşik; tespit için kullanılmaz) — van Merriënboer, B., Dumoulin, V., Hamer, J., Harrell, L., Burns, A., Denton, T. (2025). *Perch 2.0: The Bittern Lesson for Bioacoustics*. arXiv:[2508.04665](https://arxiv.org/abs/2508.04665).
 
 ## ⚖️ Lisans
@@ -335,7 +338,9 @@ Bu proje GNU Affero Genel Kamu Lisansı v3.0 (AGPL-3.0) ile lisanslanmıştır. 
 
 ## 📝 Atıf
 
-**BioSeg v2.0**'ı araştırmanızda kullanırsanız lütfen aşağıdaki tez çalışmasına, BioSeg v1.0'dan gelen altyapı için ise yukarıdaki *SoftwareX* makalesine atıf yapınız:
+**BioSeg v2.0**'ı araştırmanızda kullanırsanız lütfen aşağıdaki yazılım kaydına ve tez çalışmasına, BioSeg v1.0'dan gelen altyapı için ise yukarıdaki *SoftwareX* makalesine atıf yapınız:
+
+> Turan, G. (2026). *BioSeg Labeling Studio v2.0* (Sürüm 2.0.0) [Yazılım]. Zenodo. (DOI: Zenodo kaydı / "Cite this repository")
 
 > Turan, G. (2026). *Yapay Zekâ ile Kuş Seslerinin Akustik Analizi ve Tür Zenginliğinin Belirlenmesi* (Doktora tezi). Süleyman Demirel Üniversitesi, Fen Bilimleri Enstitüsü, Bilgisayar Mühendisliği Anabilim Dalı, Isparta.
 
@@ -348,7 +353,7 @@ Bu proje GNU Affero Genel Kamu Lisansı v3.0 (AGPL-3.0) ile lisanslanmıştır. 
 
 ## 🙏 Teşekkür
 
-Bu çalışma, Türkiye Bilimsel ve Teknolojik Araştırma Kurumu (TÜBİTAK) 1001 Bilimsel ve Teknolojik Araştırma Projelerini Destekleme Programı kapsamında, "Kuş Türlerinin Fonksiyonel Çeşitliliğinin Hesaplanması, Modellenmesi ve Haritalanması" başlıklı (Proje No: 123O927) proje tarafından desteklenmiştir.
+Bu çalışma, Türkiye Bilimsel ve Teknolojik Araştırma Kurumu (TÜBİTAK) 1001 Bilimsel ve Teknolojik Araştırma Projelerini Destekleme Programı kapsamında, "Kuş Türü Fonksiyonel Çeşitliliğinin Hesaplanması, Modellenmesi ve Haritalanması" başlıklı (Proje No: 123O927) proje tarafından desteklenmiştir.
 
 ## 📁 Proje Yapısı
 

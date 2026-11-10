@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "Bu yazılımı veya veri setini kullanırsanız lütfen aşağıdaki gibi atıf yapınız. / If you use this software or dataset, please cite it as below."
+title: "BioSeg Labeling Studio v2.0"
+type: software
+version: "2.0.0"
+date-released: "2026-11-10"
+license: AGPL-3.0-only
+repository-code: "https://github.com/gokhanturan/BioSegv2"
+abstract: "BioSeg Labeling Studio v2.0: kuş ses kayıtlarını segmentlere ayırma, BirdNET destekli aday tür tespiti, uzman doğrulamalı etiketleme, veri kalitesi denetimi, BirdNET 2.4 / Perch 2.0 gömülü temsilleriyle sınıflandırma ve gözlenen tür zenginliği analizi için açık kaynaklı araştırma yazılımı. Yazılım, TÜBİTAK 1001 projesi (No: 123O927) kapsamında toplanan kayıtların işlenmesi için geliştirilmiştir."
+keywords:
+  - bioacoustics
+  - bird sounds
+  - BirdNET
+  - Perch
+  - species richness
+authors:
+  - family-names: Turan
+    given-names: Gökhan
+    affiliation: "Süleyman Demirel Üniversitesi"
+    # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+preferred-citation:
+  type: thesis
+  authors:
+    - family-names: Turan
+      given-names: Gökhan
+  title: "Yapay Zekâ ile Kuş Seslerinin Akustik Analizi ve Tür Zenginliğinin Belirlenmesi"
+  degree: "Doktora tezi"
+  institution:
+    name: "Süleyman Demirel Üniversitesi, Fen Bilimleri Enstitüsü"
+  year: 2026
