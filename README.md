@@ -4,9 +4,7 @@
 
 [![Lisans: AGPL v3](https://img.shields.io/badge/Lisans-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-<!-- Zenodo DOI rozeti: ilk release sonrası Zenodo'daki rozet kodunu buraya yapıştırın ve bu satırı açın:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
--->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24110426.svg)](https://doi.org/10.5281/zenodo.24110426)
 
 [English README](README.en.md)
 
@@ -340,7 +338,7 @@ Bu proje GNU Affero Genel Kamu Lisansı v3.0 (AGPL-3.0) ile lisanslanmıştır. 
 
 **BioSeg v2.0**'ı araştırmanızda kullanırsanız lütfen aşağıdaki yazılım kaydına ve tez çalışmasına, BioSeg v1.0'dan gelen altyapı için ise yukarıdaki *SoftwareX* makalesine atıf yapınız:
 
-> Turan, G. (2026). *BioSeg Labeling Studio v2.0* (Sürüm 2.0.0) [Yazılım]. Zenodo. (DOI: Zenodo kaydı / "Cite this repository")
+> Turan, G. (2026). *BioSeg Labeling Studio v2.0* (Sürüm 2.0.0) [Yazılım]. Zenodo. https://doi.org/10.5281/zenodo.24110426
 
 > Turan, G. (2026). *Yapay Zekâ ile Kuş Seslerinin Akustik Analizi ve Tür Zenginliğinin Belirlenmesi* (Doktora tezi). Süleyman Demirel Üniversitesi, Fen Bilimleri Enstitüsü, Bilgisayar Mühendisliği Anabilim Dalı, Isparta.
 

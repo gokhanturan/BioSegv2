@@ -5,6 +5,7 @@ type: software
 version: "2.0.0"
 date-released: "2026-11-10"
 license: AGPL-3.0-only
+doi: 10.5281/zenodo.24110426
 repository-code: "https://github.com/gokhanturan/BioSegv2"
 abstract: "BioSeg Labeling Studio v2.0: kuş ses kayıtlarını segmentlere ayırma, BirdNET destekli aday tür tespiti, uzman doğrulamalı etiketleme, veri kalitesi denetimi, BirdNET 2.4 / Perch 2.0 gömülü temsilleriyle sınıflandırma ve gözlenen tür zenginliği analizi için açık kaynaklı araştırma yazılımı. Yazılım, TÜBİTAK 1001 projesi (No: 123O927) kapsamında toplanan kayıtların işlenmesi için geliştirilmiştir."
 keywords:
